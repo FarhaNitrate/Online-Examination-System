@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 03, 2024 at 12:01 PM
+-- Generation Time: Mar 24, 2024 at 05:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -24,6 +24,34 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `sender_id` bigint(20) UNSIGNED NOT NULL,
+  `receiver_id` bigint(20) UNSIGNED NOT NULL,
+  `content` text NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`id`, `sender_id`, `receiver_id`, `content`, `created_at`, `updated_at`) VALUES
+(1, 1, 4, 'Hello, how are you?', '2024-03-23 03:02:25', '2024-03-23 03:02:25'),
+(2, 4, 1, 'I am fine, thank you!', '2024-03-23 03:03:25', '2024-03-23 03:03:25'),
+(3, 1, 4, 'Do you want to meet up later?', '2024-03-23 03:10:25', '2024-03-23 03:10:25'),
+(4, 4, 1, 'Sure, where should we meet?', '2024-03-23 03:12:25', '2024-03-23 03:12:25'),
+(5, 1, 4, 'Is today ok?', '2024-03-23 22:34:11', '2024-03-23 22:34:11'),
+(6, 4, 1, 'Yes. Today I am free after 2.00 Pm.', '2024-03-23 22:39:33', '2024-03-23 22:39:33'),
+(7, 4, 5, 'hi', '2024-03-23 22:40:33', '2024-03-23 22:40:33');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -39,7 +67,8 @@ CREATE TABLE `migrations` (
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1),
-(2, '2019_12_14_000001_create_personal_access_tokens_table', 1);
+(2, '2019_12_14_000001_create_personal_access_tokens_table', 1),
+(3, '2024_03_23_025753_create_messages_table', 2);
 
 -- --------------------------------------------------------
 
@@ -86,12 +115,21 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `role`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `uniId`, `phoneNo`, `dept`) VALUES
-(1, 'meraj hosen', 'akib@gmail.com', 'teacher', NULL, '$2y$10$0CwaHjBXkQoYbo4Wg4msPOLLjjpqScKlodOb.0FFRWGCAWKxY/vRe', NULL, NULL, '2024-03-03 05:01:33', '11221122', '01234567891', 'cse'),
-(4, 'rifatul islam', 'rifat@gmail.com', 'student', NULL, '$2y$10$0CwaHjBXkQoYbo4Wg4msPOLLjjpqScKlodOb.0FFRWGCAWKxY/vRe', NULL, NULL, '2024-03-03 05:01:14', '99889988', '01222355648', 'swe');
+(1, 'Meraj Hosen', 'akib@gmail.com', 'teacher', NULL, '$2y$10$0CwaHjBXkQoYbo4Wg4msPOLLjjpqScKlodOb.0FFRWGCAWKxY/vRe', NULL, NULL, '2024-03-03 05:01:33', '11221122', '01234567891', 'cse'),
+(4, 'Rifatul Islam', 'rifat@gmail.com', 'student', NULL, '$2y$10$0CwaHjBXkQoYbo4Wg4msPOLLjjpqScKlodOb.0FFRWGCAWKxY/vRe', NULL, NULL, '2024-03-03 05:01:14', '99889988', '01222355648', 'swe'),
+(5, 'sakib', 'sakib@gmail.com', 'teacher', NULL, '$2y$12$KGcikJDuONVCSGZA1kDUsuaLBAk9pST8M.3LcxPvnyqTyhew97NS6', NULL, '2024-03-23 22:01:07', '2024-03-23 22:01:07', '1231', '01212121212', 'CSE');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `messages_sender_id_foreign` (`sender_id`),
+  ADD KEY `messages_receiver_id_foreign` (`receiver_id`);
 
 --
 -- Indexes for table `migrations`
@@ -119,10 +157,16 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -134,7 +178,18 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `messages`
+--
+ALTER TABLE `messages`
+  ADD CONSTRAINT `messages_receiver_id_foreign` FOREIGN KEY (`receiver_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `messages_sender_id_foreign` FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

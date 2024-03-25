@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Profile</title>
+    <title>Teacher Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url('css/style.css')}}">
     
@@ -11,6 +11,10 @@
 <body>
     <div class="container p-5">
         <div class="profile card p-5 rounded">
+            <div>
+                <a href="{{ route('students') }}"><button class="btn btn-sm btn-primary">Students</button></a>
+                <a href="{{ route('registration') }}"><button class="btn btn-sm btn-secondary">Registration</button></a>
+            </div>
             <form class="text-right" method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button class="btn btn-danger btn-sm" type="submit">Logout</button>

@@ -12,23 +12,20 @@
     <div class="container p-5">
         <div class="profile card p-5 rounded">
             <div>
-                <a href="{{ route('teachers') }}"><button class="btn btn-sm btn-primary">Teachers</button></a>
+                <a href="{{ route('student.profile') }}"><button class="btn btn-sm btn-primary">Go Back</button></a>
             </div>
             <form class="text-right" method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button class="btn btn-danger btn-sm" type="submit">Logout</button>
             </form>
         
-            <h3 class="text-center">Student Profile</h3>
-
-            <p>Name: {{ $student->name }}</p>
-            <p>Student Id: {{ $student->uniId }}</p>
-            <p>Email: {{ $student->email }}</p>
-            <p>Phone No: {{ $student->phoneNo }}</p>
-            <p>Department: {{ $student->dept }}</p>
-
-            <div>
-                <a class="d-inline" href="{{ route('student.edit') }}"><button class="btn btn-info btn-sm d-inline">Edit</button></a>
+            <div class="container">
+                <h1>List of Teachers</h1>
+                @foreach ($teachers as $teacher)
+                <div class="border rounded p-1 m-1 d-flex justify-content-between">
+                    <h6 class="text-uppercase">{{ $teacher->name }}</h6><a class="btn btn-sm btn-secondary" href="{{ route('student-message', $teacher->id) }}">Message</a>
+                </div>
+                @endforeach
             </div>
         </div>
     </div>
